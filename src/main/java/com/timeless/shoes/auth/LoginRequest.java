@@ -1,3 +1,9 @@
-package com.shop.auth;
+package com.timeless.shoes.dto;
 
-public record LoginRequest(String username, String password) {}
+import lombok.Data;
+
+@Data
+public class LoginRequest {
+    private String phoneNumber;
+    private String pin;
+}
