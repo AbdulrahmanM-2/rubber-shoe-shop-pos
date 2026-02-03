@@ -1,24 +1,16 @@
-package com.shop.report;
+@Entity
+public class Sale {
 
-import com.shop.sales.SaleReportRepository;
-import org.springframework.stereotype.Service;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-import java.math.BigDecimal;
+  private String saleNo;
+  private BigDecimal total;
+  private String paymentType;
 
-@Service
-public class ReportService {
+  @ManyToOne
+  private User user;
 
-  private final SaleReportRepository repo;
-
-  public ReportService(SaleReportRepository repo) {
-    this.repo = repo;
-  }
-
-  public DailySalesReport todaySales() {
-    Object[] row = (Object[]) repo.getTodaySummary();
-    return new DailySalesReport(
-        (BigDecimal) row[0],
-        (Long) row[1]
-    );
-  }
+  private LocalDateTime createdAt = LocalDateTime.now();
 }
