@@ -1,36 +1,28 @@
-package com.shop.auth;
+package com.timeless.shoes.controller;
 
-import com.shop.config.JwtUtil;
-import com.shop.user.User;
-import com.shop.user.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.timeless.shoes.dto.LoginRequest;
+import com.timeless.shoes.model.User;
+import com.timeless.shoes.service.UserService;
+import com.timeless.shoes.util.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-  private final UserRepository userRepo;
-  private final JwtUtil jwtUtil;
-  private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final UserService userService;
 
-  public AuthController(UserRepository userRepo, JwtUtil jwtUtil) {
-    this.userRepo = userRepo;
-    this.jwtUtil = jwtUtil;
-  }
+    @PostMapping("/login")
+    public ApiResponse<User> login(@RequestBody LoginRequest request) {
 
-  @PostMapping("/login")
-  public Object login(@RequestBody LoginRequest req) {
+        User user = userService.getActiveUserByPhone(request.getPhoneNumber());
 
-    User user = userRepo.findByUsername(req.username())
-        .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+        if (!userService.verifyPin(user, request.getPin())) {
+            throw new IllegalArgumentException("Invalid PIN");
+        }
 
-    if (!encoder.matches(req.password(), user.getPasswordHash())) {
-      throw new RuntimeException("Invalid credentials");
+        return ApiResponse.success("Login successful", user);
     }
-
-    String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
-
-    return new AuthResponse(token, user.getRole());
-  }
   }
