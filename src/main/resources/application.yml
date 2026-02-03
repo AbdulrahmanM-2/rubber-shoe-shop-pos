@@ -1,1 +1,41 @@
+spring:
+  application:
+    name: timeless-shoes-pos
 
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:timeless_shoes}
+    username: ${DB_USER:timeless}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    time-zone: Africa/Dar_es_Salaam
+
+server:
+  port: ${PORT:8080}
+
+security:
+  pin:
+    length: 4
+    max-attempts: 5
+
+app:
+  shop:
+    name: Timeless Shoes
+    currency: TZS
+    receipt:
+      language: EN_SW
+  offline:
+    enabled: true
+  barcode:
+    enabled: true
+  reports:
+    enabled: true
