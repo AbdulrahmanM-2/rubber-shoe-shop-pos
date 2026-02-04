@@ -1,12 +1,16 @@
 package com.timeless.shoes.dto;
 
-public class LowStockReportDto {
-    private Long variantId;
-    private String productName;
-    private String size;
-    private String color;
-    private int quantity;
-    private int reorderLevel;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class ProfitReportDto {
+    private LocalDate reportDate;
+    private BigDecimal profit;
+
+    public ProfitReportDto(LocalDate reportDate, BigDecimal profit) {
+        this.reportDate = reportDate;
+        this.profit = profit;
+    }
 
     // Getters & setters
 }
