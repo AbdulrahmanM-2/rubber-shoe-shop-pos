@@ -15,7 +15,7 @@
 
 ## 🛒 Order Management
 
-![Orders](docs/screenshots/order-page.png)  
+![Orders](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Orders.png)  
 *Easily create orders with multiple variants and payment options.*
 
 ---
