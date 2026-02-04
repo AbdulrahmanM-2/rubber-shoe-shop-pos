@@ -1,28 +1,21 @@
-package com.timeless.shoes.controller;
+package com.timeless.shoes.auth;
 
-import com.timeless.shoes.dto.LoginRequest;
-import com.timeless.shoes.model.User;
-import com.timeless.shoes.service.UserService;
-import com.timeless.shoes.util.ApiResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
-    public ApiResponse<User> login(@RequestBody LoginRequest request) {
-
-        User user = userService.getActiveUserByPhone(request.getPhoneNumber());
-
-        if (!userService.verifyPin(user, request.getPin())) {
-            throw new IllegalArgumentException("Invalid PIN");
-        }
-
-        return ApiResponse.success("Login successful", user);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.authenticate(request.getUsername(), request.getPassword());
+        return ResponseEntity.ok(response);
     }
-  }
+}
