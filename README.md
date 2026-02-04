@@ -22,7 +22,7 @@
 
 ## 💰 Sales & Reports
 
-![Sales Report](docs/screenshots/sales-report.png)  
+![Sales Report](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Sales%20Report.png)  
 *View daily sales, profits, and low-stock alerts in one place.*
 
 ---
