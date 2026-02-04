@@ -1,9 +1,8 @@
-package com.timeless.shoes.dto;
+package com.timeless.shoes.auth;
 
-import lombok.Data;
-
-@Data
 public class LoginRequest {
-    private String phoneNumber;
-    private String pin;
+    private String username;
+    private String password;
+
+    // Getters & setters
 }
