@@ -8,7 +8,7 @@
 
 ## 🖥️ Dashboard Preview
 
-![Dashboard](docs/screenshots/dashboard.png)  
+![Dashboard](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Dashboard.png)  
 *POS Dashboard – quick overview of sales, stock, and reports.*
 
 ---
