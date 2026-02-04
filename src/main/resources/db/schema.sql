@@ -10,3 +10,4 @@
 \i schema/sales.sql
 \i schema/StockMovements.sql
 \i schema/saleItem.sql
+\i schema/customers.sql
