@@ -1,16 +1,35 @@
+package com.timeless.shoes.sales;
+
+import com.timeless.shoes.customers.Customer;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
+@Table(name = "sales")
 public class Sale {
 
-  @Id
-  @GeneratedValue
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String saleNo;
-  private BigDecimal total;
-  private String paymentType;
+    @Column(unique = true)
+    private String saleNo;
 
-  @ManyToOne
-  private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
-  private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private BigDecimal total = BigDecimal.ZERO;
+
+    private String paymentType; // CASH, MOBILE, CREDIT
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    private List<SaleItem> items;
+
+    // Getters & setters
 }
