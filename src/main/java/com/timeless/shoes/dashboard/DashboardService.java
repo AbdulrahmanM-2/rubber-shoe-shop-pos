@@ -33,3 +33,27 @@ public class DashboardService {
                 .toList();
     }
 }
+public Map<String, Object> salesChart() {
+
+    List<Object[]> sales = saleRepo.dailySales();
+    List<Object[]> profit = saleItemRepo.dailyProfit();
+
+    Map<String, BigDecimal> salesMap = new LinkedHashMap<>();
+    Map<String, BigDecimal> profitMap = new LinkedHashMap<>();
+
+    sales.forEach(r -> salesMap.put(
+        r[0].toString(),
+        (BigDecimal) r[1]
+    ));
+
+    profit.forEach(r -> profitMap.put(
+        r[0].toString(),
+        (BigDecimal) r[1]
+    ));
+
+    return Map.of(
+        "labels", salesMap.keySet(),
+        "sales", salesMap.values(),
+        "profit", profitMap.values()
+    );
+    }
