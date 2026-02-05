@@ -4,13 +4,13 @@ const formatTsh = (amount) =>
   new Intl.NumberFormat("sw-TZ", {
     style: "currency",
     currency: "TZS",
-    minimumFractionDigits: 0
+    minimumFractionDigits: 0,
   }).format(amount);
 
 export default function Checkout({ cartItems, clearCart }) {
   const [paymentType, setPaymentType] = useState("CASH");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.unitPrice * item.quantity,
@@ -19,22 +19,87 @@ export default function Checkout({ cartItems, clearCart }) {
 
   const handleCheckout = async () => {
     if (cartItems.length === 0) {
-      alert("Cart is empty");
+      setMessage({ type: "error", text: "Cart is empty" });
       return;
     }
 
     setLoading(true);
-    setError(null);
+    setMessage(null);
 
     try {
-      const payload = {
-        paymentType,
-        customerId: null, // optional
-        items: cartItems.map(item => ({
-          variantId: item.variantId,
-          quantity: item.quantity
-        }))
-      };
+      const res = await fetch("/api/sales", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          paymentType,
+          items: cartItems.map((item) => ({
+            variantId: item.variantId,
+            quantity: item.quantity,
+          })),
+        }),
+      });
+
+      if (!res.ok) throw new Error("Checkout failed");
+
+      const data = await res.json();
+      setMessage({ type: "success", text: `Sale processed: ${data.saleNo}` });
+      clearCart();
+    } catch (err) {
+      console.error(err);
+      setMessage({ type: "error", text: err.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="border rounded-lg p-4 shadow flex flex-col h-full">
+      <h2 className="text-lg font-semibold mb-2">Checkout</h2>
+
+      <div className="flex flex-col gap-2 mb-4">
+        <label className="text-sm font-medium">Payment Type:</label>
+        <select
+          value={paymentType}
+          onChange={(e) => setPaymentType(e.target.value)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="CASH">Cash</option>
+          <option value="MOBILE_MONEY">Mobile Money</option>
+          <option value="BANK">Bank</option>
+        </select>
+      </div>
+
+      <div className="mb-4 flex justify-between font-bold text-gray-800">
+        <span>Total:</span>
+        <span>{formatTsh(total)}</span>
+      </div>
+
+      <button
+        onClick={handleCheckout}
+        disabled={loading || cartItems.length === 0}
+        className={`py-2 rounded font-semibold text-white ${
+          loading || cartItems.length === 0
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-green-600 hover:bg-green-700"
+        }`}
+      >
+        {loading ? "Processing..." : "Process Sale"}
+      </button>
+
+      {message && (
+        <p
+          className={`mt-2 text-sm ${
+            message.type === "error" ? "text-red-600" : "text-green-600"
+          }`}
+        >
+          {message.text}
+        </p>
+      )}
+    </div>
+  );
+        }      };
 
       const res = await fetch("/api/sales", {
         method: "POST",
