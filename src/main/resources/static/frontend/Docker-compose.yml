@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  # -------------------------------
+  # PostgreSQL database
+  # -------------------------------
+  db:
+    image: postgres:15
+    container_name: timeless-db
+    environment:
+      POSTGRES_DB: timeless
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - timeless-network
+
+  # -------------------------------
+  # Spring Boot backend (serves frontend from resources)
+  # -------------------------------
+  backend:
+    build:
+      context: ./backend        # Must point to backend folder containing Dockerfile, pom.xml, src/
+      dockerfile: Dockerfile
+    container_name: timeless-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://db:5432/timeless
+      DB_USERNAME: postgres
+      DB_PASSWORD: secret
+      FLY_API_TOKEN: ${FLY_API_TOKEN}        # Export locally before running
+      APP_ADMIN_FULLNAME: "Owner User"
+      APP_ADMIN_USERNAME: "owner"
+      APP_ADMIN_PASSWORD: "StrongPassword123"
+      APP_ADMIN_ROLE: "OWNER"
+    depends_on:
+      - db
+    networks:
+      - timeless-network
+
+# -------------------------------
+# Named volumes
+# -------------------------------
+volumes:
+  db_data:
+
+# -------------------------------
+# Custom bridge network
+# -------------------------------
+networks:
+  timeless-network:
+    driver: bridge
