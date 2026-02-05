@@ -1,40 +1,44 @@
-import { useEffect, useState } from "react";
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+// src/components/ProductTable.jsx
+export default function ProductTable({ products, addToCart }) {
+  if (!products || products.length === 0) return <p>No products available.</p>;
 
-const formatTsh = (amount) =>
-  new Intl.NumberFormat("sw-TZ", {
-    style: "currency",
-    currency: "TZS",
-    minimumFractionDigits: 0
-  }).format(amount);
-
-export default function Products({ addToCart }) {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Load initial products
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("/api/variants");
-        if (!res.ok) throw new Error("Failed to fetch products");
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  // WebSocket for live stock updates
-  useEffect(() => {
-    const socket = new SockJS("/ws");
+  return (
+    <table className="w-full table-auto border-collapse">
+      <thead>
+        <tr className="bg-gray-200">
+          <th className="border px-2 py-1">Product</th>
+          <th className="border px-2 py-1">Variant</th>
+          <th className="border px-2 py-1">Color</th>
+          <th className="border px-2 py-1">Size</th>
+          <th className="border px-2 py-1">Stock</th>
+          <th className="border px-2 py-1">Price (Tsh)</th>
+          <th className="border px-2 py-1">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((p) => (
+          <tr key={p.id} className="hover:bg-gray-100">
+            <td className="border px-2 py-1">{p.name}</td>
+            <td className="border px-2 py-1">{p.variantName || "-"}</td>
+            <td className="border px-2 py-1">{p.color}</td>
+            <td className="border px-2 py-1">{p.size}</td>
+            <td className="border px-2 py-1">{p.quantity}</td>
+            <td className="border px-2 py-1">{p.sellingPrice.toLocaleString()} Tsh</td>
+            <td className="border px-2 py-1">
+              <button
+                className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+                onClick={() => addToCart(p)}
+                disabled={p.quantity <= 0}
+              >
+                Add to Cart
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}    const socket = new SockJS("/ws");
     const client = new Client({
       webSocketFactory: () => socket,
       debug: (str) => console.log(str)
