@@ -45,3 +45,7 @@ public class DashboardController {
         );
     }
 }
+@GetMapping("/sales-chart")
+public Map<String, Object> salesChart() {
+    return service.salesChart();
+    }
