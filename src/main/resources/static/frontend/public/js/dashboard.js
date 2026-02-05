@@ -11,25 +11,27 @@ fetch(`${API}/metrics`)
   });
 
 /* SALES CHART */
-fetch(`${API}/sales-overview`)
+fetch("/api/dashboard/sales-chart")
   .then(res => res.json())
   .then(d => {
     new Chart(document.getElementById("salesChart"), {
       type: "line",
       data: {
-        labels: d.labels,
+        labels: [...d.labels],
         datasets: [
           {
             label: "Sales",
-            data: d.sales,
+            data: [...d.sales],
             borderColor: "#38a169",
-            fill: true
+            backgroundColor: "rgba(56,161,105,0.2)",
+            tension: 0.4
           },
           {
             label: "Profit",
-            data: d.profit,
+            data: [...d.profit],
             borderColor: "#3182ce",
-            fill: true
+            backgroundColor: "rgba(49,130,206,0.2)",
+            tension: 0.4
           }
         ]
       }
