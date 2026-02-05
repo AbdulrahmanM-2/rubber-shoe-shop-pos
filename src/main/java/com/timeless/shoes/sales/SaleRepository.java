@@ -1,12 +1,9 @@
-package com.timeless.shoes.sales;
+package com.timeless.shoes.sale;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
+import org.springframework.data.jpa.repository.*;
 import java.math.BigDecimal;
+import java.util.*;
 
-@Repository
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("""
@@ -14,5 +11,12 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
         FROM Sale s
         WHERE DATE(s.createdAt) = CURRENT_DATE
     """)
-    BigDecimal todayTotalSales();
+    BigDecimal todaySales();
+
+    @Query("""
+        SELECT s
+        FROM Sale s
+        ORDER BY s.createdAt DESC
+    """)
+    List<Sale> recentOrders(Pageable pageable);
 }
