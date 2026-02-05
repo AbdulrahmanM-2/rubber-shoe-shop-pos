@@ -1,3 +1,25 @@
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+const socket = new SockJS("/ws");
+const stomp = Stomp.over(socket);
+
+stomp.connect({}, () => {
+  stomp.subscribe("/topic/dashboard", msg => {
+    const data = JSON.parse(msg.body);
+
+    document.getElementById("todaySales").innerText =
+      `Tsh ${data.todaySales.toLocaleString()}`;
+
+    document.getElementById("todayProfit").innerText =
+      `Tsh ${data.todayProfit.toLocaleString()}`;
+
+    document.getElementById("lowStock").innerText =
+      `${data.lowStockItems} Items`;
+
+    document.getElementById("customers").innerText =
+      data.totalCustomers;
+  });
+});
 const API = "/api/dashboard";
 
 /* METRICS */
