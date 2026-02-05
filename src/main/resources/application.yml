@@ -2,6 +2,9 @@ spring:
   application:
     name: timeless-shoes-pos
 
+  profiles:
+    active: prod
+
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:timeless_shoes}
     username: ${DB_USER:timeless}
@@ -9,33 +12,74 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   jpa:
+    open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: update   # change to 'validate' after first production run
     show-sql: false
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: Africa/Dar_es_Salaam
 
   jackson:
     time-zone: Africa/Dar_es_Salaam
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   port: ${PORT:8080}
+  error:
+    include-message: always
 
-security:
-  pin:
-    length: 4
-    max-attempts: 5
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
 
+# =========================
+# APPLICATION CONFIG
+# =========================
 app:
   shop:
     name: Timeless Shoes
     currency: TZS
-    receipt:
-      language: EN_SW
-  offline:
-    enabled: true
-  barcode:
-    enabled: true
-  reports:
-    enabled: true
+    timezone: Africa/Dar_es_Salaam
+
+  auth:
+    login-type: PIN
+    pin:
+      length: 4
+      max-attempts: 5
+      lock-minutes: 15
+
+  roles:
+    owner: OWNER
+    cashier: CASHIER
+    admin: ADMIN
+
+  features:
+    offline:
+      enabled: true
+      sync-interval-seconds: 30
+    barcode:
+      enabled: true
+    reports:
+      enabled: true
+    multi-cashier:
+      enabled: true
+
+  receipt:
+    language: EN_SW
+    footer-en: "Thank you for shopping!"
+    footer-sw: "Asante kwa kununua!"
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
