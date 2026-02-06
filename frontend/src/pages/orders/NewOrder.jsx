@@ -121,6 +121,80 @@ export default NewOrder;      <input
       </select>
       <button onClick={addPayment}>Add Payment</button>
     </div>
+<div className="new-order p-4 bg-gray-50 min-h-screen relative pb-24">
+  {/* Language Switcher */}
+  <div className="flex justify-end mb-4">
+    <label className="flex items-center space-x-2">
+      <span className="font-medium">{messages.languageLabel || "Language:"}</span>
+      <select
+        className="border rounded px-2 py-1"
+        value={lang}
+        onChange={(e) => setLang(e.target.value)}
+      >
+        <option value="en">English</option>
+        <option value="sw">Kiswahili</option>
+      </select>
+    </label>
+  </div>
+
+  {/* Order Header */}
+  <div className="mb-6 bg-white shadow rounded p-4 flex justify-between items-center">
+    <div>
+      <h2 className="text-2xl font-bold">{messages.orderNumber}: {order.orderNumber}</h2>
+      <p className="text-gray-600">{messages.orderStatus}: {order.status}</p>
+    </div>
+  </div>
+
+  {/* Main Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="md:col-span-1 bg-white p-4 rounded shadow">
+      <ProductSelector
+        products={products}
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        addItem={addItem}
+        messages={messages}
+      />
+    </div>
+
+    <div className="md:col-span-2 bg-white p-4 rounded shadow overflow-auto max-h-[400px]">
+      <OrderItems order={order} products={products} messages={messages} />
+    </div>
+
+    <div className="md:col-span-1 space-y-4">
+      <div className="bg-white p-4 rounded shadow">
+        <OrderTotals order={order} messages={messages} />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <PaymentPanel
+          paymentAmount={paymentAmount}
+          setPaymentAmount={setPaymentAmount}
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+          addPayment={addPayment}
+          messages={messages}
+        />
+      </div>
+    </div>
+  </div>
+
+  {/* Fixed Footer */}
+  <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white flex justify-between items-center px-6 py-4 shadow-lg">
+    <div>
+      <p className="text-lg font-semibold">
+        {messages.balance}: {order.balance}
+      </p>
+    </div>
+    <button
+      className="bg-green-600 px-6 py-2 rounded hover:bg-green-700 text-white font-bold"
+      onClick={() => alert(messages.completeOrder)}
+    >
+      {messages.completeOrder}
+    </button>
+  </div>
+</div>
   );
 };
 
