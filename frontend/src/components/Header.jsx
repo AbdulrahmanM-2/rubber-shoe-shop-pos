@@ -8,11 +8,12 @@ export default function Header() {
         <span className="text-2xl font-logo">Timeless Shoes</span>
       </div>
       <nav className="flex gap-4">
-        <a href="/dashboard" className="hover:underline">Dashboard</a>
+        
         <a href="/customers" className="hover:underline">Customers</a>
         <a href="/orders" className="hover:underline">Orders</a>
+        <a href="/stock" className="hover:underline">stock</a>
         <a href="/payments" className="hover:underline">Payments</a>
-        <a href="/profile" className="hover:underline">Profile</a>
+        <a href="/user" className="hover:underline">user</a>
       </nav>
     </header>
   );
