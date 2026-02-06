@@ -68,21 +68,33 @@ const NewOrder = () => {
   if (!order) return <div>{messages.loading}</div>;
 
   return (
-    <div className="new-order">
-      {/* Language Switcher */}
-      <div className="language-switcher">
-        <label>
-          Language:
-          <select value={lang} onChange={(e) => setLang(e.target.value)}>
-            <option value="en">English</option>
-            <option value="sw">Kiswahili</option>
-          </select>
-        </label>
-      </div>
+    <div className="new-order p-4 bg-gray-50 min-h-screen">
+  {/* Language Switcher */}
+  <div className="flex justify-end mb-4">
+    <label className="flex items-center space-x-2">
+      <span className="font-medium">{messages.languageLabel || "Language:"}</span>
+      <select
+        className="border rounded px-2 py-1"
+        value={lang}
+        onChange={(e) => setLang(e.target.value)}
+      >
+        <option value="en">English</option>
+        <option value="sw">Kiswahili</option>
+      </select>
+    </label>
+  </div>
 
-      <h2>{messages.orderNumber}: {order.orderNumber}</h2>
-      <p>{messages.orderStatus}: {order.status}</p>
+  {/* Order Header */}
+  <div className="mb-6 bg-white shadow rounded p-4 flex justify-between items-center">
+    <div>
+      <h2 className="text-2xl font-bold">{messages.orderNumber}: {order.orderNumber}</h2>
+      <p className="text-gray-600">{messages.orderStatus}: {order.status}</p>
+    </div>
+  </div>
 
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {/* Left Column: Product Selector */}
+    <div className="md:col-span-1 bg-white p-4 rounded shadow">
       <ProductSelector
         products={products}
         selectedProduct={selectedProduct}
@@ -90,21 +102,33 @@ const NewOrder = () => {
         quantity={quantity}
         setQuantity={setQuantity}
         addItem={addItem}
-        messages={messages} // pass messages to components
-      />
-
-      <OrderItems order={order} products={products} messages={messages} />
-      <OrderTotals order={order} messages={messages} />
-
-      <PaymentPanel
-        paymentAmount={paymentAmount}
-        setPaymentAmount={setPaymentAmount}
-        paymentMethod={paymentMethod}
-        setPaymentMethod={setPaymentMethod}
-        addPayment={addPayment}
         messages={messages}
       />
     </div>
+
+    {/* Middle Column: Order Items */}
+    <div className="md:col-span-2 bg-white p-4 rounded shadow overflow-auto max-h-[400px]">
+      <OrderItems order={order} products={products} messages={messages} />
+    </div>
+
+    {/* Right Column: Totals + Payment */}
+    <div className="md:col-span-1 space-y-4">
+      <div className="bg-white p-4 rounded shadow">
+        <OrderTotals order={order} messages={messages} />
+      </div>
+      <div className="bg-white p-4 rounded shadow">
+        <PaymentPanel
+          paymentAmount={paymentAmount}
+          setPaymentAmount={setPaymentAmount}
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+          addPayment={addPayment}
+          messages={messages}
+        />
+      </div>
+    </div>
+  </div>
+</div>
   );
 };
 
