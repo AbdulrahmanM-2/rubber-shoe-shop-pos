@@ -13,7 +13,7 @@ export default function Header() {
         <a href="/orders" className="hover:underline">Orders</a>
         <a href="/stock" className="hover:underline">stock</a>
         <a href="/payments" className="hover:underline">Payments</a>
-        <a href="/user" className="hover:underline">user</a>
+        <a href="/users" className="hover:underline">users</a>
       </nav>
     </header>
   );
