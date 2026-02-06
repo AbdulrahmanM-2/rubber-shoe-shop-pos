@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_BASE = "/api"; // Spring Boot API base
+import en_messages from "./i18n/en_messages";
+import sw_messages from "./i18n/sw_messages";
+
+import ProductSelector from "./ProductSelector";
+import OrderItems from "./OrderItems";
+import OrderTotals from "./OrderTotals";
+import PaymentPanel from "./PaymentPanel";
+
+const API_BASE = "/api";
 
 const NewOrder = () => {
   const [order, setOrder] = useState(null);
@@ -12,37 +20,38 @@ const NewOrder = () => {
   const [paymentMethod, setPaymentMethod] = useState("CASH");
   const [customerId, setCustomerId] = useState(null);
 
-  // Create a new order on load
+  // Language state
+  const [lang, setLang] = useState("en");
+  const messages = lang === "en" ? en_messages : sw_messages;
+
+  // Load order & products
   useEffect(() => {
     axios
-      .post(`${API_BASE}/orders`, { customerId: customerId, userId: 1 }) // userId hardcoded for demo
+      .post(`${API_BASE}/orders`, { customerId, userId: 1 })
       .then((res) => setOrder(res.data))
-      .catch((err) => console.error(err));
+      .catch(() => alert(messages.orderNotFound));
 
-    // Load products
     axios
       .get(`${API_BASE}/products`)
       .then((res) => setProducts(res.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [messages]);
 
-  // Add item to order
   const addItem = () => {
-    if (!selectedProduct) return alert("Select a product first");
+    if (!selectedProduct) return alert(messages.selectProductAlert);
     axios
       .post(`${API_BASE}/orders/${order.id}/items`, {
         productId: selectedProduct.id,
         size: selectedProduct.size,
         color: selectedProduct.color,
-        quantity: quantity,
+        quantity,
       })
       .then((res) => setOrder(res.data))
-      .catch((err) => alert(err.response.data.message));
+      .catch((err) => alert(err.response?.data?.message || messages.insufficientStock));
   };
 
-  // Add payment
   const addPayment = () => {
-    if (paymentAmount <= 0) return alert("Enter a valid payment amount");
+    if (paymentAmount <= 0) return alert(messages.paymentInvalid);
     axios
       .post(`${API_BASE}/orders/${order.id}/payments`, {
         amount: paymentAmount,
@@ -51,72 +60,55 @@ const NewOrder = () => {
       .then((res) => {
         setOrder(res.data);
         setPaymentAmount(0);
+        alert(messages.paymentSuccess);
       })
-      .catch((err) => alert(err.response.data.message));
+      .catch((err) => alert(err.response?.data?.message || messages.paymentError));
   };
 
-  if (!order) return <div>Loading order...</div>;
+  if (!order) return <div>{messages.loading}</div>;
 
   return (
     <div className="new-order">
-      <h2>Order Number: {order.orderNumber}</h2>
-      <p>Status: {order.status}</p>
+      {/* Language Switcher */}
+      <div className="language-switcher">
+        <label>
+          Language:
+          <select value={lang} onChange={(e) => setLang(e.target.value)}>
+            <option value="en">English</option>
+            <option value="sw">Kiswahili</option>
+          </select>
+        </label>
+      </div>
 
-      <h3>Add Product</h3>
-      <select
-        value={selectedProduct?.id || ""}
-        onChange={(e) =>
-          setSelectedProduct(products.find((p) => p.id === parseInt(e.target.value)))
-        }
-      >
-        <option value="">--Select Product--</option>
-        {products.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.name} | {p.color} | Size: {p.size} | Stock: {p.stock} | Price: {p.unitPrice}
-          </option>
-        ))}
-      </select>
-      <input
-        type="number"
-        min="1"
-        value={quantity}
-        onChange={(e) => setQuantity(parseInt(e.target.value))}
+      <h2>{messages.orderNumber}: {order.orderNumber}</h2>
+      <p>{messages.orderStatus}: {order.status}</p>
+
+      <ProductSelector
+        products={products}
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+        quantity={quantity}
+        setQuantity={setQuantity}
+        addItem={addItem}
+        messages={messages} // pass messages to components
       />
-      <button onClick={addItem}>Add Item</button>
 
-      <h3>Order Items</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Size</th>
-            <th>Color</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Line Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {order.items.map((item) => (
-            <tr key={item.productId}>
-              <td>{products.find((p) => p.id === item.productId)?.name}</td>
-              <td>{item.size}</td>
-              <td>{item.color}</td>
-              <td>{item.quantity}</td>
-              <td>{item.unitPrice}</td>
-              <td>{item.lineTotal}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <OrderItems order={order} products={products} messages={messages} />
+      <OrderTotals order={order} messages={messages} />
 
-      <h3>Totals</h3>
-      <p>Subtotal: {order.subtotal}</p>
-      <p>Total Paid: {order.totalPaid}</p>
-      <p>Balance: {order.balance}</p>
+      <PaymentPanel
+        paymentAmount={paymentAmount}
+        setPaymentAmount={setPaymentAmount}
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
+        addPayment={addPayment}
+        messages={messages}
+      />
+    </div>
+  );
+};
 
-      <h3>Add Payment</h3>
-      <input
+export default NewOrder;      <input
         type="number"
         min="0"
         value={paymentAmount}
