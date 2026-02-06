@@ -1,1 +1,11 @@
-
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",  <-- if you have a comma here and nothing after, it breaks
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
