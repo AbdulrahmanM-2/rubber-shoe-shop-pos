@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Timeless Shoes POS System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body> 
 
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="left">
+    <img src="assets/logo.svg" />
+    <span>Timeless Shoes <strong>POS System</strong></span>
+  </div> 
+
+  <div class="right">
+    <span>Admin User</span>
+    <span class="role">OWNER</span>
+    <img class="avatar" src="https://i.pravatar.cc/32">
+  </div>
+</header> 
+
+<!-- DASHBOARD -->
+<main class="container"> 
+
+  <!-- METRICS -->
+  <section class="metrics">
+    <div class="metric green">
+      <h4>Today's Sales</h4>
+      <h2>TSh 35,500</h2>
+    </div>
+    <div class="metric blue">
+      <h4>Today's Profit</h4>
+      <h2>TSh 12,000</h2>
+    </div>
+    <div class="metric orange">
+      <h4>Low Stock Items</h4>
+      <h2>8 Items</h2>
+    </div>
+    <div class="metric purple">
+      <h4>Total Customers</h4>
+      <h2>145</h2>
+    </div>
+  </section> 
+
+  <!-- CHARTS -->
+  <section class="charts">
+    <div class="card">
+      <h3>Sales Overview</h3>
+      <canvas id="salesChart"></canvas>
+    </div> 
+
+    <div class="card">
+      <h3>Stock Summary</h3>
+      <canvas id="stockChart"></canvas>
+    </div>
+  </section> 
+
+  <!-- TABLES -->
+  <section class="tables"> 
+
+    <div class="card">
+      <h3>Recent Orders</h3>
+      <table>
+        <tr><th>Order #</th><th>Amount</th></tr>
+        <tr><td>OR-202604-005</td><td>KSh 12,500</td></tr>
+        <tr><td>OR-202604-004</td><td>KSh 8,000</td></tr>
+        <tr><td>OR-202604-003</td><td>KSh 5,000</td></tr>
+        <tr><td>OR-202604-002</td><td>KSh 10,000</td></tr>
+      </table>
+      <a class="view">View All →</a>
+    </div> 
+
+    <div class="card">
+      <h3>Top Selling Products</h3>
+      <ul>
+        <li>AirMax Sneakers <strong>120</strong> Sold</li>
+        <li>Classic Canvas Shoes <strong>95</strong> Sold</li>
+        <li>Sporty Running Shoes <strong>80</strong> Sold</li>
+      </ul>
+    </div> 
+
+    <div class="card">
+      <h3>Low Stock Alerts</h3>
+      <ul class="alert">
+        <li>Nike AirMax Size 42 <span>Only 3 Left</span></li>
+        <li>Blue Canvas Size 39 <span>Only 2 Left</span></li>
+        <li>Red Trainers Size 40 <span>Only 5 Left</span></li>
+      </ul>
+    </div> 
+
+    <div class="card">
+      <h3>Activity Log</h3>
+      <ul class="activity">
+        <li>Stock updated by <b>Admin</b></li>
+        <li>New order created by <b>Cashier</b></li>
+        <li>User John added by <b>Owner</b></li>
+      </ul>
+      <a class="view">View All →</a>
+    </div> 
+
+  </section> 
+
+</main> 
+
+<script src="js/dashboard.js"></script>
+</body>
+  </html>
