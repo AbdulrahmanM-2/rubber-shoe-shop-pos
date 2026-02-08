@@ -8,28 +8,28 @@
 
 ## 🖥️ Dashboard Preview
 
-![Dashboard](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Dashboard.png)  
+![Dashboard](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/backend/src/main/resources/Dashboard.png)  
 *POS Dashboard – quick overview of sales, stock, and reports.*
 
 ---
 
 ## 🛒 Order Management
 
-![Orders](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Orders.png)  
+![Orders](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/backend/src/main/resources/Orders.png)  
 *Easily create orders with multiple variants and payment options.*
 
 ---
 
 ## 💰 Sales & Reports
 
-![Sales Report](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Sales%20Report.png)  
+![Sales Report](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/backend/src/main/resources/Sales%20Report.png)  
 *View daily sales, profits, and low-stock alerts in one place.*
 
 ---
 
 ## ⚡ Animated Workflow
 
-![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/backend/src/main/resources/Animated Workflow.gif)  
+![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/backend/src/main/resources/Animated%20Workflow.gif)  
 *Watch how a cashier creates an order and processes payment.*
 
 ---
