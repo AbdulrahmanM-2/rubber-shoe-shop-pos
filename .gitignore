@@ -1,1 +1,25 @@
+# Node
+node_modules/
+npm-debug.log
+build/
+dist/
 
+# React
+.env
+.DS_Store
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.iml
+
+# Logs
+logs/
+*.log
+*.out
+
+# IDE
+.vscode/
+.idea/
