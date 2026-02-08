@@ -29,7 +29,7 @@
 
 ## ⚡ Animated Workflow
 
-![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/main/src/main/resources/Animated%20Workflow.gif)  
+![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/backend/src/main/resources/Animated Workflow.gif  
 *Watch how a cashier creates an order and processes payment.*
 
 ---
