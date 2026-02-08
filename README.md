@@ -1,6 +1,6 @@
 # 📦 Timeless Shoes POS & Inventory System
 
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/<USERNAME>/<REPO>/ci-cd.yml?branch=main?style=flat-square)](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos)/actions)  
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/<USERNAME>/<REPO>/ci-cd.yml?branch=main?style=flat-square)](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos) 
 [![License](https://img.shields.io/github/license/AbdulrahmanM-2/rubber-shoe-shop-pos)](LICENSE)  
 [![Docker](https://img.shields.io/badge/docker-ready-blue?style=flat-square)](https://www.docker.com/)  
 
@@ -29,7 +29,7 @@
 
 ## ⚡ Animated Workflow
 
-![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/backend/src/main/resources/Animated Workflow.gif  
+![Create Order GIF](https://github.com/AbdulrahmanM-2/rubber-shoe-shop-pos/blob/backend/src/main/resources/Animated Workflow.gif)  
 *Watch how a cashier creates an order and processes payment.*
 
 ---
