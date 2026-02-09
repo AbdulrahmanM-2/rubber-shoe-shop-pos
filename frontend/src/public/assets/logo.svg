@@ -1,1 +1,5 @@
+import { ReactComponent as Logo } from './assets/logo.svg';
 
+function App() {
+  return <Logo width={150} height={150} style={{ fill: 'blue' }} />;
+}
