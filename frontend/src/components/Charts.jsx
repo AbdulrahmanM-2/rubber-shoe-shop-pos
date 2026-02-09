@@ -40,13 +40,13 @@ function Charts({ salesData, stockData }) {
   }, [salesData, stockData]);
 
   return (
-    <section className="charts">
-      <div className="card">
-        <h3>Sales Overview</h3>
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-4">
+      <div className="card bg-white p-4 rounded-lg shadow">
+        <h3 className="font-semibold mb-2">Sales Overview</h3>
         <canvas ref={salesChartRef}></canvas>
       </div>
-      <div className="card">
-        <h3>Stock Summary</h3>
+      <div className="card bg-white p-4 rounded-lg shadow">
+        <h3 className="font-semibold mb-2">Stock Summary</h3>
         <canvas ref={stockChartRef}></canvas>
       </div>
     </section>
