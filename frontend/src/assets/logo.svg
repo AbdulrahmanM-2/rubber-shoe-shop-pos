@@ -1,1 +1,14 @@
+import { ReactComponent as Logo } from "./assets/logo.svg";
 
+function TopBar() {
+  return (
+    <header className="topbar">
+      <div className="left">
+        <Logo width={50} height={50} />
+        <span>Timeless Shoes <strong>POS System</strong></span>
+      </div>
+    </header>
+  );
+}
+
+export default TopBar;
