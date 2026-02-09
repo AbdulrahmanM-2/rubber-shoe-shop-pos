@@ -1,14 +1,19 @@
-import { ReactComponent as Logo } from "./assets/logo.svg";
+import { ReactComponent as Logo } from "../assets/logo.svg";
 
-function TopBar() {
+function TopBar({ user = "Admin User", role = "OWNER" }) {
   return (
-    <header className="topbar">
-      <div className="left">
-        <Logo width={50} height={50} />
-        <span>Timeless Shoes <strong>POS System</strong></span>
+    <header className="flex justify-between items-center p-4 bg-white shadow-md">
+      <div className="flex items-center space-x-3">
+        <Logo className="w-12 h-12" />
+        <span className="text-xl font-semibold">Timeless Shoes <strong>POS System</strong></span>
+      </div>
+      <div className="flex items-center space-x-3">
+        <div className="text-right">
+          <div>{user}</div>
+          <div className="text-sm bg-blue-600 text-white px-2 py-0.5 rounded">{role}</div>
+        </div>
+        <img className="w-8 h-8 rounded-full" src="https://i.pravatar.cc/32" alt="avatar"/>
       </div>
     </header>
   );
 }
-
-export default TopBar;
