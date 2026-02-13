@@ -13,4 +13,3 @@ public class DateUtils {
         return date.atTime(23, 59, 59);
     }
 }
-saleRepository.findByCreatedAtBetween(DateUtils.startOfDay(date), DateUtils.endOfDay(date));
