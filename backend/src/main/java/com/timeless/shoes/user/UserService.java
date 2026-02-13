@@ -42,7 +42,7 @@ public class UserService {
     }
 
     /**
-     * Find a user by ID
+     * Retrieve user by ID
      */
     public User getUserById(Long id) {
         return userRepository.findById(id)
@@ -50,7 +50,7 @@ public class UserService {
     }
 
     /**
-     * Deactivate a user
+     * Deactivate a user account
      */
     public User deactivateUser(Long id) {
         User user = getUserById(id);
@@ -59,7 +59,7 @@ public class UserService {
     }
 
     /**
-     * Update user's PIN
+     * Update a user's PIN
      */
     public User updatePin(Long id, String newPin) {
         User user = getUserById(id);
@@ -67,47 +67,3 @@ public class UserService {
         return userRepository.save(user);
     }
     }
-    public boolean verifyPin(User user, String rawPin) {
-        return passwordEncoder.matches(rawPin, user.getPin());
-    }
-            }package com.timeless.shoes.service;
-
-import com.timeless.shoes.model.User;
-import com.timeless.shoes.repository.UserRepository;
-import com.timeless.shoes.exception.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-@Service
-@RequiredArgsConstructor
-public class UserService {
-
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    public User createUser(String fullName, String phone, String rawPin, User.Role role) {
-        if (userRepository.existsByPhoneNumber(phone)) {
-            throw new IllegalArgumentException("Phone number already exists");
-        }
-
-        User user = User.builder()
-                .fullName(fullName)
-                .phoneNumber(phone)
-                .pin(passwordEncoder.encode(rawPin))
-                .role(role)
-                .active(true)
-                .build();
-
-        return userRepository.save(user);
-    }
-
-    public User getActiveUserByPhone(String phone) {
-        return userRepository.findByPhoneNumberAndActiveTrue(phone)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
-
-    public boolean verifyPin(User user, String rawPin) {
-        return passwordEncoder.matches(rawPin, user.getPin());
-    }
-  }
