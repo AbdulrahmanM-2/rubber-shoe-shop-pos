@@ -5,4 +5,3 @@ public enum PaymentType {
     MOBILE,
     CREDIT
 }
-sale.setPaymentType(PaymentType.CASH.name());
