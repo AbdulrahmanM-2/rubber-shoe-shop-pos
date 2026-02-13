@@ -9,27 +9,24 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy all source code (includes frontend in resources)
+# Copy source code
 COPY src ./src
 
-# Package the application
-RUN mvn clean package -DskipTests
+# Package the application with production profile
+RUN mvn clean package -Pproduction -DskipTests
 
 # -------------------------------
 # Stage 2: Run the application
 # -------------------------------
-FROM eclipse-temurin:17-jre-alpine
-
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
 # Copy the JAR from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose Spring Boot port
-EXPOSE 8080
+# Use Railway dynamic port
+ENV PORT 8080
+EXPOSE ${PORT}
 
-# Use dumb-init to handle signals
-ENTRYPOINT ["dumb-init", "--", "java", "-Xmx512m", "-Dserver.port=8080", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx512m", "-Dserver.port=${PORT}", "-jar", "app.jar"]
