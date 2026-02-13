@@ -3,16 +3,17 @@
 # -------------------------------
 FROM maven:3.9-eclipse-temurin-17 AS build
 
+# Set working directory
 WORKDIR /app
 
-# Copy Maven config first to leverage cache
-COPY pom.xml .
+# Copy pom.xml and download dependencies
+COPY backend/pom.xml ./pom.xml
 RUN mvn dependency:go-offline -B
 
-# Copy source code
-COPY src ./src
+# Copy source code from backend
+COPY backend/src ./src
 
-# Package the application with production profile
+# Package the application using production profile
 RUN mvn clean package -Pproduction -DskipTests
 
 # -------------------------------
@@ -22,11 +23,12 @@ FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
-# Copy the JAR from build stage
+# Copy the JAR from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Use Railway dynamic port
+# Expose Railway dynamic port
 ENV PORT 8080
 EXPOSE ${PORT}
 
+# Run the app
 ENTRYPOINT ["java", "-Xmx512m", "-Dserver.port=${PORT}", "-jar", "app.jar"]
