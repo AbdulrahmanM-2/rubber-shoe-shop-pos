@@ -1,8 +1,0 @@
-<img src={Logo} alt="Logo" width={150} onClick={() => {
-  const link = document.createElement('a');
-  link.href = Logo;
-  link.download = 'logo.svg';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}} style={{ cursor: 'pointer' }} />
