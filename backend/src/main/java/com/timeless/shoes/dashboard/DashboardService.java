@@ -1,3 +1,16 @@
+package com.timeless.shoes.dashboard;
+
+import com.timeless.shoes.repository.SaleItemRepository;
+import com.timeless.shoes.repository.SaleRepository;
+import com.timeless.shoes.repository.ProductVariantRepository;
+import com.timeless.shoes.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -7,6 +20,9 @@ public class DashboardService {
     private final ProductVariantRepository variantRepo;
     private final CustomerRepository customerRepo;
 
+    /**
+     * Dashboard metrics
+     */
     public Map<String, Object> metrics() {
         return Map.of(
             "todaySales", saleRepo.todaySales(),
@@ -16,6 +32,9 @@ public class DashboardService {
         );
     }
 
+    /**
+     * Recent orders for dashboard
+     */
     public List<Map<String,Object>> recentOrders() {
         return saleRepo.recentOrders(PageRequest.of(0, 4))
                 .stream()
@@ -26,15 +45,37 @@ public class DashboardService {
                 .toList();
     }
 
+    /**
+     * Sales chart data
+     */
     public Map<String, Object> salesChart() {
-        // Example implementation — adjust as needed
-        List<String> labels = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-        List<BigDecimal> sales = List.of(
-            BigDecimal.valueOf(10000),
-            BigDecimal.valueOf(20000),
-            BigDecimal.valueOf(15000),
-            BigDecimal.valueOf(25000),
-            BigDecimal.valueOf(22000),
+
+        // Fetch raw data from repositories
+        List<Object[]> salesData = saleRepo.dailySales();     // Example: Object[]{ "Mon", BigDecimal.valueOf(10000) }
+        List<Object[]> profitData = saleItemRepo.dailyProfit();
+
+        // Map day -> value
+        Map<String, BigDecimal> salesMap = new LinkedHashMap<>();
+        Map<String, BigDecimal> profitMap = new LinkedHashMap<>();
+
+        salesData.forEach(r -> salesMap.put(
+                r[0].toString(),
+                (BigDecimal) r[1]
+        ));
+
+        profitData.forEach(r -> profitMap.put(
+                r[0].toString(),
+                (BigDecimal) r[1]
+        ));
+
+        // Return in frontend-friendly format
+        return Map.of(
+            "labels", salesMap.keySet(),
+            "sales", salesMap.values(),
+            "profit", profitMap.values()
+        );
+    }
+            }            BigDecimal.valueOf(22000),
             BigDecimal.valueOf(35500)
         );
         List<BigDecimal> profit = List.of(
