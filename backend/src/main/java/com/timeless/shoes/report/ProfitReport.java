@@ -41,4 +41,11 @@ public class ProfitReport {
                 ", totalSales=" + totalSales +
                 '}';
     }
+}    @Override
+    public String toString() {
+        return "ProfitReport{" +
+                "totalProfit=" + totalProfit +
+                ", totalSales=" + totalSales +
+                '}';
+    }
 }
