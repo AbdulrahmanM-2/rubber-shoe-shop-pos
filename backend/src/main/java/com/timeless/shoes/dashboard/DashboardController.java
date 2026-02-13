@@ -44,8 +44,10 @@ public class DashboardController {
             Map.of("order","OR-202604-002","amount",10000)
         );
     }
-}
-@GetMapping("/sales-chart")
-public Map<String, Object> salesChart() {
-    return service.salesChart();
+
+    // ✅ Correctly inside the class
+    @GetMapping("/sales-chart")
+    public Map<String, Object> salesChart() {
+        return service.salesChart();
     }
+                }
