@@ -21,7 +21,7 @@ public class DashboardService {
     private final CustomerRepository customerRepo;
 
     /**
-     * Dashboard metrics
+     * Dashboard metrics: sales, profit, low stock, total customers
      */
     public Map<String, Object> metrics() {
         return Map.of(
@@ -33,7 +33,7 @@ public class DashboardService {
     }
 
     /**
-     * Recent orders for dashboard
+     * Fetch recent orders for dashboard
      */
     public List<Map<String,Object>> recentOrders() {
         return saleRepo.recentOrders(PageRequest.of(0, 4))
@@ -46,53 +46,29 @@ public class DashboardService {
     }
 
     /**
-     * Sales chart data
+     * Generate sales chart data: daily sales and profit
      */
     public Map<String, Object> salesChart() {
 
         // Fetch raw data from repositories
-        List<Object[]> salesData = saleRepo.dailySales();     // Example: Object[]{ "Mon", BigDecimal.valueOf(10000) }
+        List<Object[]> salesData = saleRepo.dailySales();   // Example: Object[]{ "Mon", BigDecimal.valueOf(10000) }
         List<Object[]> profitData = saleItemRepo.dailyProfit();
 
-        // Map day -> value
         Map<String, BigDecimal> salesMap = new LinkedHashMap<>();
         Map<String, BigDecimal> profitMap = new LinkedHashMap<>();
 
-        salesData.forEach(r -> salesMap.put(
-                r[0].toString(),
-                (BigDecimal) r[1]
-        ));
+        // Populate maps
+        salesData.forEach(r -> salesMap.put(r[0].toString(), (BigDecimal) r[1]));
+        profitData.forEach(r -> profitMap.put(r[0].toString(), (BigDecimal) r[1]));
 
-        profitData.forEach(r -> profitMap.put(
-                r[0].toString(),
-                (BigDecimal) r[1]
-        ));
-
-        // Return in frontend-friendly format
+        // Return data in frontend-friendly format
         return Map.of(
             "labels", salesMap.keySet(),
             "sales", salesMap.values(),
             "profit", profitMap.values()
         );
     }
-            }            BigDecimal.valueOf(22000),
-            BigDecimal.valueOf(35500)
-        );
-        List<BigDecimal> profit = List.of(
-            BigDecimal.valueOf(5000),
-            BigDecimal.valueOf(15000),
-            BigDecimal.valueOf(10000),
-            BigDecimal.valueOf(20000),
-            BigDecimal.valueOf(15000),
-            BigDecimal.valueOf(28000)
-        );
-
-        return Map.of(
-            "labels", labels,
-            "sales", sales,
-            "profit", profit
-        );
-    }
+                    }    }
 }
     List<Object[]> sales = saleRepo.dailySales();
     List<Object[]> profit = saleItemRepo.dailyProfit();
