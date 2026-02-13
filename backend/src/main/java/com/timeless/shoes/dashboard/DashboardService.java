@@ -1,10 +1,3 @@
-package com.timeless.shoes.dashboard;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
-import java.util.*;
-
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -32,9 +25,34 @@ public class DashboardService {
                 ))
                 .toList();
     }
-}
-public Map<String, Object> salesChart() {
 
+    public Map<String, Object> salesChart() {
+        // Example implementation — adjust as needed
+        List<String> labels = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+        List<BigDecimal> sales = List.of(
+            BigDecimal.valueOf(10000),
+            BigDecimal.valueOf(20000),
+            BigDecimal.valueOf(15000),
+            BigDecimal.valueOf(25000),
+            BigDecimal.valueOf(22000),
+            BigDecimal.valueOf(35500)
+        );
+        List<BigDecimal> profit = List.of(
+            BigDecimal.valueOf(5000),
+            BigDecimal.valueOf(15000),
+            BigDecimal.valueOf(10000),
+            BigDecimal.valueOf(20000),
+            BigDecimal.valueOf(15000),
+            BigDecimal.valueOf(28000)
+        );
+
+        return Map.of(
+            "labels", labels,
+            "sales", sales,
+            "profit", profit
+        );
+    }
+}
     List<Object[]> sales = saleRepo.dailySales();
     List<Object[]> profit = saleItemRepo.dailyProfit();
 
