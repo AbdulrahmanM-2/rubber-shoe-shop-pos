@@ -12,8 +12,6 @@
 
     <name>shoes</name>
     <description>Rubber Shoes Shop Application</description>
-    <description>Rubber Shoes Shop Application</description>
-
     <!-- Spring Boot Parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
