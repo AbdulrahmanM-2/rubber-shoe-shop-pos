@@ -18,7 +18,9 @@ function App() {
     loading,
   } = useDashboardData();
 
-  if (loading) return <div className="p-4">Loading dashboard...</div>;
+  if (loading) {
+    return <div className="p-4">Loading dashboard...</div>;
+  }
 
   return (
     <div className="App bg-gray-100 min-h-screen">
@@ -35,6 +37,9 @@ function App() {
       </main>
     </div>
   );
+}
+
+export default App;  );
 }
 
 export default App;    </div>
