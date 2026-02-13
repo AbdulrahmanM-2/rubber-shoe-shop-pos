@@ -6,6 +6,3 @@ public enum UserRole {
     CASHIER,
     STOREKEEPER
 }
-if (user.getRole().equals(UserRole.MANAGER.name())) {
-    // allow access
-}
