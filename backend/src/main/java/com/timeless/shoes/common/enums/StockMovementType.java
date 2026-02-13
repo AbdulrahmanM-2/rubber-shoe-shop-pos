@@ -5,4 +5,3 @@ public enum StockMovementType {
     OUT,
     ADJUST
 }
-StockMovement movement = new StockMovement(variant, StockMovementType.OUT.name(), quantity, reference);
