@@ -1,43 +1,34 @@
-package com.timeless.shoes.controller.customer;
+package com.timeless.shoes.controller.stock;
 
 import com.timeless.shoes.dto.ApiResponse;
+import com.timeless.shoes.dto.UpdateStockRequest;
+import com.timeless.shoes.service.StockService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/customers")
-public class CustomerController {
+@RequestMapping("/api/stock")
+@RequiredArgsConstructor
+public class StockController {
 
-    @GetMapping("/{id}")
-    public ApiResponse<Object> getCustomer(@PathVariable Long id) {
-        return new ApiResponse<>(true, "Customer placeholder", null);
-    }
-}        return ResponseEntity.ok(new ApiResponse<>(true, "Stock added", saved));
-    }
+    private final StockService stockService;
 
-    /**
-     * Reduce stock (OUT)
-     */
-    @PostMapping("/out")
-    public ResponseEntity<ApiResponse<StockMovement>> reduceStock(@RequestBody StockMovement movement) {
-        StockMovement saved = stockService.reduceStock(movement);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Stock reduced", saved));
+    /** Get all low-stock items */
+    @GetMapping("/low-stock")
+    public ApiResponse getLowStockItems() {
+        return new ApiResponse(true, stockService.getLowStockItems());
     }
 
-    /**
-     * Adjust stock manually (ADJUST)
-     */
-    @PostMapping("/adjust")
-    public ResponseEntity<ApiResponse<StockMovement>> adjustStock(@RequestBody StockMovement movement) {
-        StockMovement saved = stockService.adjustStock(movement);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Stock adjusted", saved));
+    /** Update stock quantity for a product variant */
+    @PostMapping("/update")
+    public ApiResponse updateStock(@RequestBody UpdateStockRequest request) {
+        stockService.updateStock(request);
+        return new ApiResponse(true, "Stock updated successfully");
     }
 
-    /**
-     * Get stock movements for a specific variant
-     */
-    @GetMapping("/movements/{variantId}")
-    public ResponseEntity<ApiResponse<List<StockMovement>>> variantMovements(@PathVariable Long variantId) {
-        List<StockMovement> movements = stockService.getMovementsByVariant(variantId);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Stock movements retrieved", movements));
+    /** Optional: get stock summary */
+    @GetMapping("/summary")
+    public ApiResponse getStockSummary() {
+        return new ApiResponse(true, stockService.getStockSummary());
     }
 }
