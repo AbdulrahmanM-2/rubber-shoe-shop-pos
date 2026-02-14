@@ -2,11 +2,12 @@ package com.timeless.shoes.sales;
 
 import java.math.BigDecimal;
 import java.util.List;
+import com.timeless.shoes.customers.Customer;
 
 public class Sale {
     private Long id;
-    private String saleNo; // added because your service uses getSaleNo()
-    private Long customerId;
+    private String saleNo;
+    private Customer customer;
     private BigDecimal total;
     private List<SaleItem> items;
 
@@ -16,8 +17,8 @@ public class Sale {
     public String getSaleNo() { return saleNo; }
     public void setSaleNo(String saleNo) { this.saleNo = saleNo; }
 
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
 
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
