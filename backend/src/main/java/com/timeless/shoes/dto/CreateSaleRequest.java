@@ -1,11 +1,11 @@
-package com.timeless.shoes.dto;
+package com.timeless.shoes.sales.dto;
 
+import lombok.Data;
 import java.util.List;
 
+@Data
 public class CreateSaleRequest {
-    private Long customerId; // optional for walk-in
+    private Long customerId;
     private String paymentType;
     private List<SaleItemDto> items;
-
-    // Getters & setters
 }
