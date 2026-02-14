@@ -1,17 +1,19 @@
 package com.timeless.shoes.report;
 
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-@Service
 public class ReportService {
+    public BigDecimal todaySales() {
+        return BigDecimal.ZERO;
+    }
 
-    public List<DailySalesReport> todaySales() { return new ArrayList<>(); }
+    public BigDecimal todayProfit() {
+        return BigDecimal.ZERO;
+    }
 
-    public BigDecimal todayProfit() { return BigDecimal.ZERO; }
-
-    public Object paymentSummary() { return new Object(); }
+    public List<Object[]> paymentSummary() {
+        return new ArrayList<>();
+    }
 }
