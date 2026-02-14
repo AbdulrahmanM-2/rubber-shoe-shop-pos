@@ -1,33 +1,43 @@
 package com.timeless.shoes.sales;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.List;
 
-@Entity
-@Table(name = "sales")
 public class Sale {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private LocalDateTime createdAt;
-
-    private String paymentType;
-
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    private Long customerId;
+    private BigDecimal total;
     private List<SaleItem> items;
 
-    public Sale() {}
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public String getPaymentType() { return paymentType; }
-    public List<SaleItem> getItems() { return items; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public void setPaymentType(String paymentType) { this.paymentType = paymentType; }
-    public void setItems(List<SaleItem> items) { this.items = items; }
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public List<SaleItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<SaleItem> items) {
+        this.items = items;
+    }
 }
