@@ -7,7 +7,7 @@ public class ProfitReport {
     private BigDecimal totalProfit;
     private BigDecimal totalSales;
 
-    // Default constructor required by JPA when using "new" in queries
+    // Default constructor (needed for JPA projections)
     public ProfitReport() {
     }
 
@@ -17,7 +17,7 @@ public class ProfitReport {
         this.totalSales = totalSales;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public BigDecimal getTotalProfit() {
         return totalProfit;
     }
@@ -35,6 +35,14 @@ public class ProfitReport {
     }
 
     @Override
+    public String toString() {
+        return "ProfitReport{" +
+                "totalProfit=" + totalProfit +
+                ", totalSales=" + totalSales +
+                '}';
+    }
+
+} // <-- final class closing brace    @Override
     public String toString() {
         return "ProfitReport{" +
                 "totalProfit=" + totalProfit +
