@@ -1,13 +1,19 @@
 package com.timeless.shoes.dto;
 
-public class ApiResponse<T> {
+public class ApiResponse {
+
     private boolean success;
     private String message;
-    private T data;
+    private Object data;
 
     public ApiResponse() {}
 
-    public ApiResponse(boolean success, String message, T data) {
+    public ApiResponse(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
+    public ApiResponse(boolean success, String message, Object data) {
         this.success = success;
         this.message = message;
         this.data = data;
@@ -19,6 +25,6 @@ public class ApiResponse<T> {
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
 
-    public T getData() { return data; }
-    public void setData(T data) { this.data = data; }
+    public Object getData() { return data; }
+    public void setData(Object data) { this.data = data; }
 }
