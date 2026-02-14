@@ -1,28 +1,42 @@
 package com.timeless.shoes.product;
 
-import jakarta.persistence.*;
+import java.math.BigDecimal;
 
-@Entity
-@Table(name = "product_variants")
 public class ProductVariant {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private int quantity;
+    private BigDecimal sellingPrice;
 
-    private String sku;
+    public Long getId() {
+        return id;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public ProductVariant() {}
+    public String getName() {
+        return name;
+    }
 
-    public Long getId() { return id; }
-    public String getSku() { return sku; }
-    public Product getProduct() { return product; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setSku(String sku) { this.sku = sku; }
-    public void setProduct(Product product) { this.product = product; }
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(BigDecimal sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
 }
