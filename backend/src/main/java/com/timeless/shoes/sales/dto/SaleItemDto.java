@@ -7,6 +7,8 @@ public class SaleItemDto {
     private int quantity;
     private BigDecimal unitPrice;
     private BigDecimal total;
+    private String size;
+    private String color;
 
     public Long getVariantId() { return variantId; }
     public void setVariantId(Long variantId) { this.variantId = variantId; }
@@ -19,4 +21,10 @@ public class SaleItemDto {
 
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
-}
+
+    public String getSize() { return size; }
+    public void setSize(String size) { this.size = size; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+        }
