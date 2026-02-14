@@ -1,17 +1,14 @@
-package com.timeless.shoes.dto;
+package com.timeless.shoes.sales.dto;
 
+import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
+@Data
 public class SaleDto {
-    private Long saleId;
+    private Long id;
     private String saleNo;
-    private String customerName;
     private BigDecimal total;
     private String paymentType;
     private LocalDateTime createdAt;
-    private List<SaleItemDto> items;
-
-    // Getters & setters
 }
