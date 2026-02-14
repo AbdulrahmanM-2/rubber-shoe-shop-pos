@@ -1,16 +1,15 @@
 package com.timeless.shoes.report;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DailySalesReport {
     private LocalDate date;
     private BigDecimal totalSales;
-    private BigDecimal totalProfit;
+
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
+
+    public BigDecimal getTotalSales() { return totalSales; }
+    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
 }
