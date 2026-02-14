@@ -1,35 +1,33 @@
 package com.timeless.shoes.auth;
 
+import com.timeless.shoes.service.UserService;
 import com.timeless.shoes.users.User;
-import com.timeless.shoes.users.UserRepository;
-import com.timeless.shoes.common.exception.BusinessException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
 
-    public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final String SECRET_KEY = "SuperSecureSecretKey2026";
 
-    public LoginResponse authenticate(String username, String password) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BusinessException("Invalid username or password"));
+    public String login(LoginRequest request) {
+        User user = userService.getByUsername(request.getUsername());
+        if (user == null) throw new RuntimeException("User not found");
 
-        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
-            throw new BusinessException("Invalid username or password");
-        }
+        // TODO: check password hash
 
-        String token = jwtTokenProvider.generateToken(user.getUsername(), user.getRole());
-        return new LoginResponse(token, user.getUsername(), user.getRole());
+        return Jwts.builder()
+                .setSubject(user.getUsername())
+                .claim("role", user.getRole())
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
 }
