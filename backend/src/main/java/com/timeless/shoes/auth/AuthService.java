@@ -1,12 +1,9 @@
 package com.timeless.shoes.auth;
 
-import com.timeless.shoes.service.UserService;
 import com.timeless.shoes.users.User;
-import org.springframework.stereotype.Service;
+import com.timeless.shoes.service.UserService;
 
-@Service
 public class AuthService {
-
     private final UserService userService;
 
     public AuthService(UserService userService) {
@@ -15,7 +12,9 @@ public class AuthService {
 
     public User authenticate(String username, String password) {
         User user = userService.getByUsername(username);
-        // Minimal stub: accept any password
-        return user;
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 }
