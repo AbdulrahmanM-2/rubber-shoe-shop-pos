@@ -1,23 +1,15 @@
 package com.timeless.shoes.customers;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
-
-@Entity
-@Table(name = "customers")
 public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-    private String phone;
-    private BigDecimal creditLimit = BigDecimal.ZERO;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    public Customer() {}
+    public Customer(Long id, String name) { this.id = id; this.name = name; }
 
-    // Getters & setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 }
