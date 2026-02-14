@@ -20,6 +20,7 @@ public class DashboardService {
     private final ProductVariantRepository variantRepo;
     private final CustomerRepository customerRepo;
 
+    /** Dashboard metrics */
     public Map<String, Object> metrics() {
         return Map.of(
             "todaySales", saleRepo.todaySales(),
@@ -29,12 +30,36 @@ public class DashboardService {
         );
     }
 
+    /** Recent orders */
     public List<Map<String, Object>> recentOrders() {
         return saleRepo.recentOrders(PageRequest.of(0, 4))
                 .stream()
                 .map(s -> Map.of(
                     "order", s.getOrderNumber(),
                     "amount", s.getTotal()
+                ))
+                .toList();
+    }
+
+    /** Sales chart data */
+    public Map<String, Object> salesChart() {
+        List<Object[]> salesData = saleRepo.dailySales();
+        List<Object[]> profitData = saleItemRepo.dailyProfit();
+
+        Map<String, BigDecimal> salesMap = new LinkedHashMap<>();
+        Map<String, BigDecimal> profitMap = new LinkedHashMap<>();
+
+        salesData.forEach(r -> salesMap.put(r[0].toString(), (BigDecimal) r[1]));
+        profitData.forEach(r -> profitMap.put(r[0].toString(), (BigDecimal) r[1]));
+
+        return Map.of(
+            "labels", salesMap.keySet(),
+            "sales", salesMap.values(),
+            "profit", profitMap.values()
+        );
+    }
+
+} // final class closing brace                    "amount", s.getTotal()
                 ))
                 .toList();
     }
