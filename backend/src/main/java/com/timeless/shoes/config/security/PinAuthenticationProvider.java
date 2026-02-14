@@ -1,42 +1,21 @@
 package com.timeless.shoes.security;
 
-import com.timeless.shoes.model.User;
-import com.timeless.shoes.service.UserService;
-import lombok.RequiredArgsConstructor;
+import com.timeless.shoes.users.User;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-@RequiredArgsConstructor
 public class PinAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserService userService;
-
     @Override
-    public Authentication authenticate(Authentication authentication) {
-
-        String phone = authentication.getPrincipal().toString();
-        String pin = authentication.getCredentials().toString();
-
-        User user = userService.getActiveUserByPhone(phone);
-
-        if (!userService.verifyPin(user, pin)) {
-            throw new BadCredentialsException("Invalid PIN");
-        }
-
-        return new PinAuthenticationToken(
-                user,
-                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
-        );
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        return null; // stub
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return PinAuthenticationToken.class.isAssignableFrom(authentication);
+        return true;
     }
-    }
+}
