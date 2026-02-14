@@ -1,12 +1,21 @@
 package com.timeless.shoes.report;
 
-import org.springframework.stereotype.Service;
+import java.util.Collections;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
 
-    public List<DailySalesReport> getDailySales() {
-        return List.of();
+    public List<Object> todaySales() {
+        return Collections.emptyList();
+    }
+
+    public double todayProfit() {
+        return 0.0;
+    }
+
+    public Object paymentSummary() {
+        return null;
     }
 }
