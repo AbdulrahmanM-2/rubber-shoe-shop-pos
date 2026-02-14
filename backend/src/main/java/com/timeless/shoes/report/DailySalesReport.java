@@ -1,22 +1,14 @@
 package com.timeless.shoes.report;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class DailySalesReport {
+    private String product;
+    private BigDecimal total;
 
-    private LocalDate date;
-    private BigDecimal totalSales;
-    private BigDecimal profit;
+    public String getProduct() { return product; }
+    public void setProduct(String product) { this.product = product; }
 
-    public DailySalesReport() {}
-
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
-
-    public BigDecimal getTotalSales() { return totalSales; }
-    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
-
-    public BigDecimal getProfit() { return profit; }
-    public void setProfit(BigDecimal profit) { this.profit = profit; }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
 }
