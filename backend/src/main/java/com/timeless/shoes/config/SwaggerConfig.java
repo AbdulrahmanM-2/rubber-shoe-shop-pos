@@ -4,41 +4,29 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
 
-    /**
-     * Main OpenAPI configuration
-     */
     @Bean
-    public OpenAPI timelessShoesOpenAPI() {
+    public OpenAPI apiInfo() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Timeless Shoes POS API")
-                        .description("REST API for Timeless Shoes Point-of-Sale and Inventory System")
-                        .version("1.0.0")
-                        .contact(new Contact()
-                                .name("Timeless Shoes Dev Team")
-                                .email("support@timelessshoes.com")
-                                .url("https://timelessshoes.com"))
-                        .license(new License()
-                                .name("Apache 2.0")
-                                .url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-                );
+                        .title("Shoes POS API")
+                        .version("1.0")
+                        .description("POS Application API")
+                        .contact(new Contact().name("Support").email("support@example.com"))
+                        .license(new License().name("Apache 2.0")));
     }
 
-    /**
-     * Optional: group API endpoints
-     */
     @Bean
-    public GroupedOpenApi apiGroup() {
+    public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .group("timeless-shoes")
-                .pathsToMatch("/api/**")
+                .group("public-api")
+                .pathsToMatch("/**")
                 .build();
     }
 }
