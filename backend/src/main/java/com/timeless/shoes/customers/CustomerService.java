@@ -1,14 +1,17 @@
 package com.timeless.shoes.customers;
 
-import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class CustomerService {
+    private final List<Customer> customers = new ArrayList<>();
+
+    public Customer createCustomer(Customer customer) {
+        customers.add(customer);
+        return customer;
+    }
 
     public List<Customer> getAllCustomers() {
-        // stub returns empty list
-        return List.of();
+        return customers;
     }
 }
