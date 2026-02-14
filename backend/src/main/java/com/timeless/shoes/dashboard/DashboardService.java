@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * Service for dashboard metrics, recent orders, and sales charts.
+ */
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -20,7 +23,9 @@ public class DashboardService {
     private final ProductVariantRepository variantRepo;
     private final CustomerRepository customerRepo;
 
-    /** Dashboard metrics */
+    /**
+     * Get dashboard metrics: today’s sales, profit, low stock, and total customers.
+     */
     public Map<String, Object> metrics() {
         return Map.of(
             "todaySales", saleRepo.todaySales(),
@@ -30,11 +35,54 @@ public class DashboardService {
         );
     }
 
-    /** Recent orders */
+    /**
+     * Get the 4 most recent orders for dashboard display.
+     */
     public List<Map<String, Object>> recentOrders() {
         return saleRepo.recentOrders(PageRequest.of(0, 4))
                 .stream()
                 .map(s -> Map.of(
+                    "order", s.getOrderNumber(),
+                    "amount", s.getTotal()
+                ))
+                .toList();
+    }
+
+    /**
+     * Get sales and profit chart data for the dashboard.
+     */
+    public Map<String, Object> salesChart() {
+        // Fetch raw data from repositories
+        List<Object[]> salesData = saleRepo.dailySales();
+        List<Object[]> profitData = saleItemRepo.dailyProfit();
+
+        // Prepare maps to preserve order
+        Map<String, BigDecimal> salesMap = new LinkedHashMap<>();
+        Map<String, BigDecimal> profitMap = new LinkedHashMap<>();
+
+        // Populate sales map
+        for (Object[] row : salesData) {
+            String label = row[0].toString();
+            BigDecimal value = (BigDecimal) row[1];
+            salesMap.put(label, value);
+        }
+
+        // Populate profit map
+        for (Object[] row : profitData) {
+            String label = row[0].toString();
+            BigDecimal value = (BigDecimal) row[1];
+            profitMap.put(label, value);
+        }
+
+        // Return combined map
+        return Map.of(
+            "labels", salesMap.keySet(),
+            "sales", salesMap.values(),
+            "profit", profitMap.values()
+        );
+    }
+
+} // final class closing brace                .map(s -> Map.of(
                     "order", s.getOrderNumber(),
                     "amount", s.getTotal()
                 ))
