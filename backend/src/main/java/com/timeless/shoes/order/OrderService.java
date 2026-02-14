@@ -1,24 +1,22 @@
 package com.timeless.shoes.order;
 
 import org.springframework.stereotype.Service;
-
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
 
-    public Order createOrder(Order order) {
-        // TODO: implement order creation logic
-        return order;
+    public BigDecimal getTodayProfit() {
+        return BigDecimal.ZERO;
     }
 
-    public Optional<Order> getOrderById(Long id) {
-        return Optional.empty();
+    public String getPaymentSummary() {
+        return "No payments";
     }
 
-    public List<Order> getAllOrders() {
+    public List<String> getLowStockVariants() {
         return Collections.emptyList();
     }
 }
