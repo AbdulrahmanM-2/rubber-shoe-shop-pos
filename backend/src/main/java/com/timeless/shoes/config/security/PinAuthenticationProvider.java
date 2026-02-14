@@ -1,9 +1,9 @@
 package com.timeless.shoes.security;
 
-import com.timeless.shoes.users.User;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import com.timeless.shoes.users.User;
 import org.springframework.stereotype.Component;
 
 @Component
