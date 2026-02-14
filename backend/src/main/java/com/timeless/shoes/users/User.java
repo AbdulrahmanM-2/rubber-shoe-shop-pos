@@ -4,7 +4,6 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String phoneNumber;
     private boolean active;
 
     public Long getId() { return id; }
@@ -15,9 +14,6 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
