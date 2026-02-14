@@ -1,40 +1,17 @@
-package com.timeless.shoes.controller.stock;
+package com.timeless.shoes.controller.customer;
 
 import com.timeless.shoes.dto.ApiResponse;
-import com.timeless.shoes.product.ProductVariant;
-import com.timeless.shoes.stock.StockMovement;
-import com.timeless.shoes.stock.StockService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/stock")
-public class StockController {
+@RequestMapping("/api/customers")
+public class CustomerController {
 
-    private final StockService stockService;
-
-    public StockController(StockService stockService) {
-        this.stockService = stockService;
+    @GetMapping("/{id}")
+    public ApiResponse<Object> getCustomer(@PathVariable Long id) {
+        return new ApiResponse<>(true, "Customer placeholder", null);
     }
-
-    /**
-     * Get all product variants with current stock
-     */
-    @GetMapping("/variants")
-    public ResponseEntity<ApiResponse<List<ProductVariant>>> allVariants() {
-        List<ProductVariant> variants = stockService.getAllVariants();
-        return ResponseEntity.ok(new ApiResponse<>(true, "All variants retrieved", variants));
-    }
-
-    /**
-     * Add stock (IN)
-     */
-    @PostMapping("/in")
-    public ResponseEntity<ApiResponse<StockMovement>> addStock(@RequestBody StockMovement movement) {
-        StockMovement saved = stockService.addStock(movement);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Stock added", saved));
+}        return ResponseEntity.ok(new ApiResponse<>(true, "Stock added", saved));
     }
 
     /**
