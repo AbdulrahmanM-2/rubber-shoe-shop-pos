@@ -6,10 +6,16 @@ import java.time.LocalDate;
 public class DailySalesReport {
     private LocalDate date;
     private BigDecimal totalSales;
+    private int totalOrders;
 
+    public DailySalesReport() {
+        this.date = LocalDate.now();
+        this.totalSales = BigDecimal.ZERO;
+        this.totalOrders = 0;
+    }
+
+    // Getters
     public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
-
     public BigDecimal getTotalSales() { return totalSales; }
-    public void setTotalSales(BigDecimal totalSales) { this.totalSales = totalSales; }
-}
+    public int getTotalOrders() { return totalOrders; }
+    }
