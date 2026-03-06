@@ -1,6 +1,0 @@
-CREATE TABLE suppliers (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(150) NOT NULL,
-  phone VARCHAR(30),
-  created_at TIMESTAMP DEFAULT NOW()
-);
