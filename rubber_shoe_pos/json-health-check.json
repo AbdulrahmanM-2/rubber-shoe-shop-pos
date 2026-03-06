@@ -1,0 +1,102 @@
+const fs = require('fs');
+const path = require('path');
+const EJSON = require('mongodb-extended-json'); // optional, only if using EJSON
+
+// ======================
+// Recursively get all JSON/EJSON files
+// ======================
+function getAllJsonFiles(dir, files = []) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (let entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      getAllJsonFiles(fullPath, files);
+    } else if (entry.name.endsWith('.json') || entry.name.endsWith('.ejson')) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+// ======================
+// Auto-fix common JSON issues
+// ======================
+function fixJsonContent(content) {
+  let fixed = content;
+
+  // Remove trailing commas in objects and arrays
+  fixed = fixed.replace(/,(\s*[\]}])/g, '$1');
+
+  // Remove BOM if present
+  fixed = fixed.replace(/^\uFEFF/, '');
+
+  // Remove comments (both // and /* */)
+  fixed = fixed.replace(/\/\/.*$/gm, '');
+  fixed = fixed.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  // Trim spaces
+  fixed = fixed.trim();
+
+  return fixed;
+}
+
+// ======================
+// Get line and column from position
+// ======================
+function getLineAndColumn(content, pos) {
+  const lines = content.slice(0, pos).split('\n');
+  const line = lines.length;
+  const column = lines[lines.length - 1].length + 1;
+  return { line, column };
+}
+
+// ======================
+// Check and fix a single file
+// ======================
+function checkAndFixFile(filePath) {
+  const originalContent = fs.readFileSync(filePath, 'utf8');
+  const fixedContent = fixJsonContent(originalContent);
+
+  try {
+    // Parse using EJSON or JSON
+    if (filePath.endsWith('.ejson')) {
+      EJSON.parse(fixedContent);
+    } else {
+      JSON.parse(fixedContent);
+    }
+
+    // Write back only if fixed
+    if (originalContent !== fixedContent) {
+      fs.writeFileSync(filePath, fixedContent, 'utf8');
+      console.log(`✅ ${filePath} fixed and valid`);
+    } else {
+      console.log(`✅ ${filePath} is valid`);
+    }
+
+  } catch (err) {
+    // Try to find line/column if possible
+    let line = 0, column = 0;
+    const match = err.message.match(/position (\d+)/i);
+    if (match) {
+      const pos = parseInt(match[1], 10);
+      const loc = getLineAndColumn(fixedContent, pos);
+      line = loc.line;
+      column = loc.column;
+    }
+
+    console.error(`❌ ${filePath} has a parse error:`);
+    console.error(`   ${err.message} ${line ? `(Line: ${line}, Column: ${column})` : ''}`);
+  }
+}
+
+// ======================
+// Run health check
+// ======================
+const projectRoot = process.cwd();
+const files = getAllJsonFiles(projectRoot);
+
+if (files.length === 0) {
+  console.log('No JSON/EJSON files found.');
+} else {
+  files.forEach(checkAndFixFile);
+}
