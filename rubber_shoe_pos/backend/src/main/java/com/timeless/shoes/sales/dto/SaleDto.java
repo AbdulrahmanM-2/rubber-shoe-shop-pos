@@ -1,7 +1,9 @@
 package com.timeless.shoes.sales.dto;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
 public class SaleDto {
     private Long saleId;
     private String saleNo;
@@ -10,18 +12,19 @@ public class SaleDto {
     private BigDecimal total;
     private LocalDateTime createdAt;
     private List<SaleItemDto> items;
+
     public Long getSaleId() { return saleId; }
-    public void setSaleId(Long id) { this.saleId = id; }
+    public void setSaleId(Long saleId) { this.saleId = saleId; }
     public String getSaleNo() { return saleNo; }
-    public void setSaleNo(String s) { this.saleNo = s; }
+    public void setSaleNo(String saleNo) { this.saleNo = saleNo; }
     public String getCustomerName() { return customerName; }
-    public void setCustomerName(String c) { this.customerName = c; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
     public String getPaymentType() { return paymentType; }
-    public void setPaymentType(String p) { this.paymentType = p; }
+    public void setPaymentType(String paymentType) { this.paymentType = paymentType; }
     public BigDecimal getTotal() { return total; }
-    public void setTotal(BigDecimal t) { this.total = t; }
+    public void setTotal(BigDecimal total) { this.total = total; }
     public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime c) { this.createdAt = c; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public List<SaleItemDto> getItems() { return items; }
-    public void setItems(List<SaleItemDto> i) { this.items = i; }
+    public void setItems(List<SaleItemDto> items) { this.items = items; }
 }

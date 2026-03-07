@@ -1,5 +1,7 @@
 package com.timeless.shoes.sales.dto;
+
 import java.math.BigDecimal;
+
 public class SaleItemDto {
     private Long variantId;
     private String productName;
@@ -8,18 +10,19 @@ public class SaleItemDto {
     private BigDecimal total;
     private String size;
     private String color;
+
     public Long getVariantId() { return variantId; }
-    public void setVariantId(Long v) { this.variantId = v; }
+    public void setVariantId(Long variantId) { this.variantId = variantId; }
     public String getProductName() { return productName; }
-    public void setProductName(String p) { this.productName = p; }
+    public void setProductName(String productName) { this.productName = productName; }
     public int getQuantity() { return quantity; }
-    public void setQuantity(int q) { this.quantity = q; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
     public BigDecimal getUnitPrice() { return unitPrice; }
-    public void setUnitPrice(BigDecimal u) { this.unitPrice = u; }
+    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
     public BigDecimal getTotal() { return total; }
-    public void setTotal(BigDecimal t) { this.total = t; }
+    public void setTotal(BigDecimal total) { this.total = total; }
     public String getSize() { return size; }
-    public void setSize(String s) { this.size = s; }
+    public void setSize(String size) { this.size = size; }
     public String getColor() { return color; }
-    public void setColor(String c) { this.color = c; }
+    public void setColor(String color) { this.color = color; }
 }
