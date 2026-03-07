@@ -1,37 +1,35 @@
 package com.timeless.shoes.service;
 
-import com.timeless.shoes.model.Product;
-import com.timeless.shoes.repository.ProductRepository;
-import com.timeless.shoes.exception.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
+import com.timeless.shoes.entity.CashierShift;
+import com.timeless.shoes.entity.Order;
+import com.timeless.shoes.entity.User;
+import com.timeless.shoes.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-public class ProductService {
+public class OrderService {
 
-    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
-    public Product create(Product product) {
-        return productRepository.save(product);
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    public Product getByBarcode(String barcode) {
-        return productRepository.findByBarcodeAndActiveTrue(barcode)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 
-    public List<Product> getAllActive() {
-        return productRepository.findByActiveTrue();
+    public List<Order> getOrdersByShift(CashierShift shift) {
+        return orderRepository.findByShift(shift);
     }
 
-    public void reduceStock(Product product, int quantity) {
-        if (product.getQuantity() < quantity) {
-            throw new IllegalStateException("Insufficient stock");
-        }
-        product.setQuantity(product.getQuantity() - quantity);
-        productRepository.save(product);
+    public List<Order> getOrdersByCashier(User cashier) {
+        return orderRepository.findByCashier(cashier);
+    }
+
+    public Order getById(Long id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + id));
     }
 }
