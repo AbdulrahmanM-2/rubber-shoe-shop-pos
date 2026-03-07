@@ -1,10 +1,9 @@
-package com.timeless.shoes.repository;
-
-import java.math.BigDecimal;
+package com.timeless.shoes.sales;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.time.LocalDateTime;
 import java.util.List;
-
-public interface SaleRepository {
-    BigDecimal todaySales();
-    List<Object[]> dailySales();
-    List<Object[]> recentOrders(org.springframework.data.domain.Pageable pageable);
+@Repository
+public interface SaleRepository extends JpaRepository<Sale, Long> {
+    List<Sale> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 }
