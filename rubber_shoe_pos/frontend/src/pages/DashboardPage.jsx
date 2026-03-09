@@ -66,27 +66,30 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      {/* Header */}
-      <header className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-blue-700 flex items-center gap-2">
-          <img src="/logo.png" alt="Timeless Shoes" className="w-10 h-10" />
-          Timeless Shoes POS
-        </h1>
-        <div className="text-gray-600 font-semibold">
-          Cashier: <span className="text-blue-600">John Doe</span>
-        </div>
-      </header>
+  <div className="min-h-screen bg-gray-100 p-4">
+    {/* Header */}
+    <header className="flex items-center justify-between mb-4">
+      <h1 className="text-2xl font-bold text-blue-700 flex items-center gap-2">
+        <img src="/logo.png" alt="Timeless Shoes" className="w-10 h-10" />
+        Timeless Shoes POS
+      </h1>
+      <div className="text-gray-600 font-semibold">
+        Cashier: <span className="text-blue-600">John Doe</span>
+      </div>
+    </header>
 
-      {/* Dashboard Grid */}
-      <ProductsTable products={products} addToCart={addToCart} />
+    {/* Dashboard Grid */}
+    <div className="grid grid-cols-3 gap-4">
+      {/* Products List */}
+      <div className="col-span-2">
+        <ProductsTable products={products} addToCart={addToCart} />
+      </div>
 
-        {/* Cart & Checkout */}
-        <div className="col-span-1 flex flex-col gap-4">
-          <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
-          <Checkout cartItems={cartItems} clearCart={clearCart} />
-        </div>
+      {/* Cart & Checkout */}
+      <div className="col-span-1 flex flex-col gap-4">
+        <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
+        <Checkout cartItems={cartItems} clearCart={clearCart} />
       </div>
     </div>
-  );
-                    }
+  </div>
+);
