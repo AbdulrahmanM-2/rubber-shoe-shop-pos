@@ -79,11 +79,7 @@ export default function DashboardPage() {
       </header>
 
       {/* Dashboard Grid */}
-      <div className="grid grid-cols-3 gap-4">
-        {/* Products List */}
-        <div className="col-span-2">
-          <Products products={products} addToCart={addToCart} />
-        </div>
+      <ProductsTable products={products} addToCart={addToCart} />
 
         {/* Cart & Checkout */}
         <div className="col-span-1 flex flex-col gap-4">
