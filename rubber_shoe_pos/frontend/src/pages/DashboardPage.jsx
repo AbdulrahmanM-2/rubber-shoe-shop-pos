@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Products from "../components/Products";
+import ProductsTable from "../components/ProductsTable";
 import Cart from "../components/Cart";
 import Checkout from "../components/Checkout";
 import SockJS from "sockjs-client";
