@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import Products from "./pages/Products";
+import POSPage from "./pages/POSPage";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/pos" element={<POSPage />} />
       </Routes>
     </BrowserRouter>
   );
