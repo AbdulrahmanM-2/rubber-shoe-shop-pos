@@ -1,0 +1,4 @@
+.env
+*.jwk.json
+*.key
+application-local.yml
